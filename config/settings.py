@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-vbfskn4@4ttia&l8p#)s5pm3)flirio3p_2djp(@k=x8827fw!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic', # this is for porduction static files
     'django.contrib.staticfiles',
 
     #local
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # whitenoise middleaware
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -126,7 +128,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS=[STATIC_DIR,]
-STATIC_ROOT=os.path.join(BASE_DIR,'static_root')
+STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
